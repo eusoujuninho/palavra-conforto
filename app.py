@@ -1,17 +1,14 @@
-from flask import Flask
-# Importe os Blueprints dos seus controladores
-from controllers.devocionais_controller import devocionais_bp
-from controllers.versiculos_controller import versiculos_bp
-from controllers.whatsapp_controller import whatsapp_bp
-from controllers.transactions_controller import transactions_bp
+from flask import Flask, jsonify
+from controllers.religious_content_controller import religious_content_bp
 
 app = Flask(__name__)
 
-# Registra os Blueprints com a aplicação Flask
-app.register_blueprint(devocionais_bp)
-app.register_blueprint(versiculos_bp)
-app.register_blueprint(whatsapp_bp)
-app.register_blueprint(transactions_bp)
+# Registra o Blueprint na aplicação
+app.register_blueprint(religious_content_bp)
+
+@app.route('/')
+def index():
+    return jsonify({'message': 'O serviço está funcionando!'})
 
 if __name__ == '__main__':
     app.run(debug=True)
