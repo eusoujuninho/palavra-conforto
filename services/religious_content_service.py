@@ -5,7 +5,8 @@ from datetime import datetime
 import io
 import boto3
 from dotenv import load_dotenv
-from utils.audio_generation import generate_chunk_audio
+from utils.audio_generation import generate_audio, create_audio_mix, upload_audio_to_cloudflare_r2
+
 
 # Carrega as variáveis de ambiente
 load_dotenv()
@@ -75,18 +76,21 @@ class ReligiousContentService:
         return content
 
     @staticmethod
-    def save_audio_to_cloudflare_r2(text, type):
-        voice = "EXAVITQu4vr4xnSDxMaL"
-        model = "eleven_multilingual_v2"
-        audio_segment = generate_chunk_audio(text, voice, model)
-        
-        buffer = io.BytesIO()
-        audio_segment.export(buffer, format="mp3")
-        buffer.seek(0)
+    def generate_verse_audio(generate_audio_flag=True):
+            content = ReligiousContentService.get_content_from_url(type='versiculo_do_dia')
+            if generate_audio_flag:
+                audio_segment = generate_audio(content['conteudo'])
+                mixed_audio_path = create_audio_mix(audio_segment, 'path/to/your/background.mp3')
+                public_url = upload_audio_to_cloudflare_r2(mixed_audio_path)
+                content['audio_url'] = public_url
+            return content
 
-        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-        filename = f"{type}_{timestamp}.mp3"
-        s3.upload_fileobj(buffer, os.getenv("CLOUDFLARE_R2_BUCKET_NAME"), filename)
-
-        public_url = os.path.join(os.getenv("CLOUDFLARE_R2_BUCKET_PUBLIC_URL"), filename)
-        return public_url
+    @staticmethod
+    def generate_devotional_audio(generate_audio_flag=True):
+            content = ReligiousContentService.get_content_from_url(type='devocional_diario')
+            if generate_audio_flag:
+                audio_segment = generate_audio(content['conteudo'])
+                mixed_audio_path = create_audio_mix(audio_segment, 'path/to/your/background.mp3')
+                public_url = upload_audio_to_cloudflare_r2(mixed_audio_path)
+                content['audio_url'] = public_url
+            return content
