@@ -1,0 +1,14 @@
+# Ignorar pastas __pycache__ de forma recursiva
+**/__pycache__/
+
+# Ignorar a pasta app_palavra
+app_palavra/
+
+# Ignorar todos os arquivos .mp3 dentro da pasta audios
+audios/*.mp3
+
+# Ignorar todos os arquivos .mp3 dentro da pasta audios/results
+audios/results/*.mp3
+
+# Ignorar todos os arquivos .mp3 dentro da pasta audios/voices
+audios/voices/*.mp3

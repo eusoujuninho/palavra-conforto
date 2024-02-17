@@ -1,3 +1,4 @@
+import requests
 from flask import Blueprint, jsonify, request
 from services.religious_content_service import ReligiousContentService
 from utils.audio_generation import generate_audio
