@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from pyairtable.orm import Model, fields as F
+from pyairtable.orm import Model, fields as F   
 
 load_dotenv()
 

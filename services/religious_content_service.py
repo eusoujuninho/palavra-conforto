@@ -58,14 +58,12 @@ class ReligiousContentService:
         return result
 
     @staticmethod
-    def generate_verse(generate_audio_flag=True):
-        content = ReligiousContentService.get_content_from_url(type='versiculo_do_dia')
-        return ReligiousContentService.generate_content_audio(content, 'verse', generate_audio_flag)
-
+    def generate_verse():
+        return ReligiousContentService.get_content_from_url(type='versiculo_do_dia')
+    
     @staticmethod
-    def generate_devotional(generate_audio_flag=True):
-        content = ReligiousContentService.get_content_from_url(type='devocional_diario')
-        return ReligiousContentService.generate_content_audio(content, 'devotional', generate_audio_flag)
+    def generate_devotional():
+        return ReligiousContentService.get_content_from_url(type='devocional_diario')
 
     @staticmethod
     def generate_content_audio(content, type, generate_audio_flag):
@@ -75,22 +73,4 @@ class ReligiousContentService:
             content['audio_url'] = audio_url
         return content
 
-    @staticmethod
-    def generate_verse_audio(generate_audio_flag=True):
-            content = ReligiousContentService.get_content_from_url(type='versiculo_do_dia')
-            if generate_audio_flag:
-                audio_segment = generate_audio(content['conteudo'])
-                mixed_audio_path = create_audio_mix(audio_segment, 'path/to/your/background.mp3')
-                public_url = upload_audio_to_cloudflare_r2(mixed_audio_path)
-                content['audio_url'] = public_url
-            return content
-
-    @staticmethod
-    def generate_devotional_audio(generate_audio_flag=True):
-            content = ReligiousContentService.get_content_from_url(type='devocional_diario')
-            if generate_audio_flag:
-                audio_segment = generate_audio(content['conteudo'])
-                mixed_audio_path = create_audio_mix(audio_segment, 'path/to/your/background.mp3')
-                public_url = upload_audio_to_cloudflare_r2(mixed_audio_path)
-                content['audio_url'] = public_url
-            return content
+   

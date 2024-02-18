@@ -1,6 +1,5 @@
 from flask import Flask, jsonify, request
 import sqlite3
-from services.web_scraper_service import get_content_from_url
 from services.whatsapp_service import sendWhatsappMessage
 from utils.audio_generation import generate_audio, create_audio_mix
 from utils.file_handling import save_file
